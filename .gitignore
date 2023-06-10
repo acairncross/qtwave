@@ -70,6 +70,9 @@ CMakeLists.txt.user*
 # CMake generated files
 build-*/
 
+# Nix
+result
+
 # Binaries
 # --------
 *.dll
