@@ -18,8 +18,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void openFile();
+
 private:
+    void createActions();
+    void createMenus();
+
     QAbstractItemModel *model;
     FreezeTableWidget *tableView;
+
+    QAction *openFileAction;
+
+    QMenu *fileMenu;
 };
 #endif // MAINWINDOW_H
