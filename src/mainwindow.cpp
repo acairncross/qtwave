@@ -1,17 +1,16 @@
 #include "mainwindow.h"
-#include "wavescene.h"
 
-#include <QGraphicsView>
+#include "freezetablewidget.h"
+
+#include <QStandardItemModel>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    scene = new WaveScene(this);
-    scene->setSceneRect(QRectF(0, 0, 800, 400));
+    model = new QStandardItemModel(this);
+    tableView = new FreezeTableWidget(model);
 
-    view = new QGraphicsView(scene);
-
-    setCentralWidget(view);
+    setCentralWidget(tableView);
     setWindowTitle(tr("QtWave"));
 }
 

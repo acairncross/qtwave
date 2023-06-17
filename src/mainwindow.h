@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 
-class WaveScene;
+class FreezeTableWidget;
+class QAbstractItemModel;
 
 QT_BEGIN_NAMESPACE
 class QGraphicsView;
@@ -18,7 +19,7 @@ public:
     ~MainWindow();
 
 private:
-    WaveScene *scene;
-    QGraphicsView *view;
+    QAbstractItemModel *model;
+    FreezeTableWidget *tableView;
 };
 #endif // MAINWINDOW_H

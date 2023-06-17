@@ -16,8 +16,8 @@ set(PROJECT_SOURCES
         src/main.cpp
         src/mainwindow.cpp
         src/mainwindow.h
-        src/wavescene.cpp
-        src/wavescene.h
+        src/freezetablewidget.h
+        src/freezetablewidget.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
