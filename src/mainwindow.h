@@ -4,11 +4,13 @@
 #include <QMainWindow>
 
 class FreezeTableWidget;
-class QAbstractItemModel;
+class QStandardItemModel;
 
 QT_BEGIN_NAMESPACE
 class QGraphicsView;
 QT_END_NAMESPACE
+
+class VcdParser;
 
 class MainWindow : public QMainWindow
 {
@@ -25,11 +27,13 @@ private:
     void createActions();
     void createMenus();
 
-    QAbstractItemModel *model;
+    QStandardItemModel *model;
     FreezeTableWidget *tableView;
 
     QAction *openFileAction;
 
     QMenu *fileMenu;
+
+    VcdParser *vcdParser;
 };
 #endif // MAINWINDOW_H

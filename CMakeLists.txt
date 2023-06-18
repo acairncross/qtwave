@@ -16,6 +16,8 @@ set(PROJECT_SOURCES
         src/main.cpp
         src/mainwindow.cpp
         src/mainwindow.h
+        src/vcdparser.cpp
+        src/vcdparser.h
         src/freezetablewidget.h
         src/freezetablewidget.cpp
 )
