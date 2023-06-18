@@ -97,6 +97,7 @@ bool VcdParser::parseHeader(VcdHeader *inHeader)
             *in >> token; // $end
 
             header.vars.insert(identifierCode, reference);
+            header.varWidths.insert(identifierCode, size);
         } else if (token == "$enddefinitions") {
             *inHeader = header;
             return true;
