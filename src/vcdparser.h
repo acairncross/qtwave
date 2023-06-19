@@ -24,7 +24,6 @@ struct VcdHeader
     QString version;
     quint64 timescaleNumber;
     TimescaleUnit timescaleUnit;
-    QMap<QString, QString> vars;
     // Maybe this map should go the other way since multiple reference names can be mapped to the
     // same identifier code
     QMap<QString, QString> vars; // Identifier code -> reference name
