@@ -63,7 +63,7 @@ bool VcdParser::parseHeader(VcdHeader *inHeader)
         } if (token == "$timescale") {
             *in >> token;
             bool ok = true;
-            header.timescaleNumber = token.toULongLong(&ok);
+            header.timescaleNumber = token.toULong(&ok);
             if (!ok) {
                 return false;
             }
@@ -85,7 +85,7 @@ bool VcdParser::parseHeader(VcdHeader *inHeader)
             QString var_type;
             *in >> var_type;
 
-            qsizetype size;
+            size_t size;
             *in >> size;
 
             QString identifierCode;
@@ -99,6 +99,7 @@ bool VcdParser::parseHeader(VcdHeader *inHeader)
             header.vars.insert(identifierCode, reference);
             header.varWidths.insert(identifierCode, size);
         } else if (token == "$enddefinitions") {
+            *in >> token; // $end
             *inHeader = header;
             return true;
         }
@@ -106,4 +107,64 @@ bool VcdParser::parseHeader(VcdHeader *inHeader)
 
     // Successful header parse should have returned on $enddefinitions
     return false;
+}
+
+bool VcdParser::parseBody(QMap<QString, Waveform> *inBody) {
+    uint64_t time = 0;
+    while (!in->atEnd()) {
+        in->skipWhiteSpace();
+        if (in->atEnd()) {
+            break;
+        }
+
+        QString token;
+        *in >> token;
+        if (token.at(0) == '$') {
+            for (*in >> token; token != "$end"; *in >> token);
+        } else if (token.at(0) == '#') {
+            bool ok;
+            time = token.mid(1).toULong(&ok);
+            if (!ok) return false;
+        } else if (QString("01xXzZ").contains(token.at(0))) {
+            Value value;
+            if (token.at(0) == '0') {
+                value = Value::V0;
+            } else if (token.at(0) == '1') {
+                value = Value::V1;
+            } else if (token.at(0) == 'x' || token.at(0) == 'X') {
+                value = Value::X;
+            } else {
+                value = Value::Z;
+            }
+            QVector<Value> values = { value };
+            QString identifierCode = token.mid(1);
+            (*inBody)[identifierCode].values[time].append(value);
+        } else if (QString("bB").contains(token.at(0))) {
+            QString valueString = token;
+
+            QString identifierCode;
+            *in >> identifierCode;
+
+            for (int i = 1; i < valueString.size(); i++) {
+                Value value;
+                if (token.at(i) == '0') {
+                    value = Value::V0;
+                } else if (token.at(i) == '1') {
+                    value = Value::V1;
+                } else if (token.at(i) == 'x' || token.at(i) == 'X') {
+                    value = Value::X;
+                } else {
+                    value = Value::Z;
+                }
+                (*inBody)[identifierCode].values[time].append(value);
+            }
+        } else if (QString("rR").contains(token.at(0))) {
+            // Ignore these for now
+            QString identifierCode;
+            *in >> identifierCode;
+        } else {
+            return false;
+        }
+    }
+    return true;
 }

@@ -10,8 +10,6 @@ QT_BEGIN_NAMESPACE
 class QGraphicsView;
 QT_END_NAMESPACE
 
-class VcdParser;
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -33,7 +31,5 @@ private:
     QAction *openFileAction;
 
     QMenu *fileMenu;
-
-    VcdParser *vcdParser;
 };
 #endif // MAINWINDOW_H

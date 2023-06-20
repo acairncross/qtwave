@@ -41,9 +41,12 @@ void MainWindow::openFile()
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) return;
     QTextStream stream(&file);
 
-    vcdParser = new VcdParser(&stream);
+    VcdParser vcdParser(&stream);
     VcdHeader vcdHeader;
-    vcdParser->parseHeader(&vcdHeader);
+    vcdParser.parseHeader(&vcdHeader);
+
+    QMap<QString, Waveform> vcdBody;
+    vcdParser.parseBody(&vcdBody);
 
     // Note: The model takes ownership of the item when calling setItem
 
