@@ -4,6 +4,7 @@
 #include <QString>
 #include <QVector>
 #include <QMap>
+#include <QMetaType>
 
 QT_BEGIN_NAMESPACE
 class QTextStream;
@@ -44,10 +45,16 @@ struct Waveform {
     size_t width;
 };
 
+Q_DECLARE_METATYPE(Waveform)
+
 class VcdParser
 {
 public:
     VcdParser(QTextStream *in);
+
+//    QMap<QString, QString> identifier_codes; // Identifier code -> reference name
+//    QMap<QString, Signal> waves; // Identifier code -> (time -> value)
+
     bool parseHeader(VcdHeader *inHeader);
     bool parseBody(QMap<QString, Waveform> *inBody);
 

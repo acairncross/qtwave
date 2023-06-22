@@ -20,6 +20,10 @@ set(PROJECT_SOURCES
         src/vcdparser.h
         src/freezetablewidget.h
         src/freezetablewidget.cpp
+        src/waveformdelegate.h
+        src/waveformdelegate.cpp
+        src/waveformitem.h
+        src/waveformitem.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
