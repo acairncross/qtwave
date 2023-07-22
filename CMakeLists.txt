@@ -9,8 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Qml Quick QuickWidgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Qml Quick QuickWidgets)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -33,7 +33,20 @@ else()
     )
 endif()
 
-target_link_libraries(qtwave PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(qtwave PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Qml
+    Qt${QT_VERSION_MAJOR}::Quick
+    Qt${QT_VERSION_MAJOR}::QuickWidgets
+)
+
+# TODO: Add compatibility with Qt5
+qt_add_qml_module(qtwave
+    URI QtWave
+    QML_FILES
+        qml/waveforms.qml
+    RESOURCE_PREFIX /
+)
 
 set_target_properties(qtwave PROPERTIES
     MACOSX_BUNDLE TRUE
